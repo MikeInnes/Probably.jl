@@ -6,7 +6,7 @@ State(ψ::AbstractVector{<:Real}) = State(float(complex(ψ)))
 
 function State(n::Integer, vs::AbstractVector{<:Integer})
   ψ = zeros(Complex128, 2^n)
-  foreach(v -> ψ[2^n-v] = 1/√length(vs), vs)
+  foreach(v -> ψ[v+1] = 1/√length(vs), vs)
   return State(ψ)
 end
 
@@ -15,7 +15,7 @@ State(n::Integer) = State(n, [0])
 nbits(s::State) = nbits(s.ψ)
 Base.length(s::State) = nbits(s)
 
-labels(s::State) = reverse(map(n -> bits(n-1)[end-nbits(s)+1:end], 1:length(s.ψ)))
+labels(s::State) = map(n -> bits(n-1)[end-nbits(s)+1:end], 1:length(s.ψ))
 
 probabilities(s::State) = abs2.(s.ψ)
 
