@@ -15,7 +15,7 @@ State(n::Integer) = State(n, [0])
 nbits(s::State) = nbits(s.ψ)
 Base.length(s::State) = nbits(s)
 
-labels(s::State) = map(n -> bits(n-1)[end-nbits(s)+1:end], 1:length(s.ψ))
+labels(s::State) = map(n -> Base.bits(n-1)[end-nbits(s)+1:end], 1:length(s.ψ))
 
 probabilities(s::State) = abs2.(s.ψ)
 
@@ -34,10 +34,12 @@ end
 function apply!(U::AbstractMatrix, s::State, is...)
   @assert nbits(U) == length(is)
   U = pad(U, 0, nbits(s)-nbits(U))
-  S = reduce(*, [swap(nbits(s), i, j) for (i, j) in enumerate(is)])
-  apply!(S*U*S, s)
+  S = headfirst(nbits(s), is...)
+  apply!(S'*U*S, s)
 end
 
-# s = State(5)
+# s = State(2)
 
-# apply!(H, s, 3)
+# apply!(H, s, 1)
+
+# apply!(CX, s, 1, 2)

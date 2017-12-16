@@ -1,26 +1,37 @@
-I = [1 0
-     0 1]
+@generated function bits(n, ::Type{Val{N}}) where N
+  :($([:(Bool((n >> $(i-1)) & 0x01)) for i = N:-1:1]...),)
+end
 
-H = [1  1
-     1 -1]/√2
+@generated function int(bits::NTuple{N}) where N
+  reduce((x, b) -> :(($x<<1)+$b), 0, [:(bits[$i]) for i = 1:N])
+end
 
-X = [0 1
-     1 0]
+int(n::Bool) = int((n,))
 
-S = [1 0 0 0
-     0 0 1 0
-     0 1 0 0
-     0 0 0 1]
+function classical(f, ::Type{Val{N}}) where N
+  U = zeros(Int, 2^N, 2^N)
+  for i = 0:2^N-1
+    U[int(f(bits(i, Val{N})))+1, i+1] = 1
+  end
+  return U
+end
+
+classical(f, N) = classical(f, Val{N})
+
+permutation(is::NTuple{N}) where N =
+  classical(x -> map(i -> x[i], is), Val{N})
 
 pad(U, l, r) = foldr(⊗, [repeated(I, l)..., U, repeated(I, r)...])
 
-swap(n) =
-  n == 0 ? I :
-  n == 1 ? S :
-  (I⊗swap(n-1)) * pad(S,0,n-1) * (I⊗swap(n-1))
+headfirst(n, is...) = permutation((is..., setdiff(1:n, is)...))
 
-swap(n, a, b) = pad(swap(b-a),a-1,n-b)
+I = classical(identity, 1)
 
-# Sp = [1, 3, 2, 4]
-# Ip = [1, 2]
-# kronp(as, bs) = [(a-1)*length(bs)+b for a in as for b in bs]
+X = classical(x -> !x[1], 1)
+
+CX = classical(x -> (x[1], x[1] ⊻ x[2]), 2)
+
+S = classical(reverse, 2)
+
+H = [1  1
+     1 -1]/√2
