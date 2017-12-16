@@ -38,8 +38,33 @@ function apply!(U::AbstractMatrix, s::State, is...)
   apply!(S'*U*S, s)
 end
 
+function probabilities(s::State, is...)
+  n = length(is)
+  M = measure(n, nbits(s)-length(is))*headfirst(nbits(s), is...)
+  M*probabilities(s)
+end
+
+function sample(ps)
+  x = rand()
+  s = zero(eltype(ps))
+  for i = 1:length(ps)
+    s += ps[i]
+    s > x && return i
+  end
+end
+
+function measure!(s::State, is...)
+  n = length(is)
+  M = measure(n, nbits(s)-length(is))*headfirst(nbits(s), is...)
+  ps = M*probabilities(s)
+  i = sample(ps)
+  s.ψ .*= M'*[(j==i)*1/sqrt(ps[i]) for j = 1:length(ps)]
+  bits(i-1, Val{length(is)})
+end
+
 # s = State(2)
-
 # apply!(H, s, 1)
-
 # apply!(CX, s, 1, 2)
+# measure!(s, 1)
+# measure!(s, 2)
+# s

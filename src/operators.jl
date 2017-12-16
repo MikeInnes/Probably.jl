@@ -35,3 +35,12 @@ S = classical(reverse, 2)
 
 H = [1  1
      1 -1]/√2
+
+function measure(n, m)
+  M = zeros(Int, 2^n, 2^(n+m))
+  for i = 0:2^n-1, j = 0:2^m-1
+    mn = i<<m+j
+    M[i+1, mn+1] = 1
+  end
+  return M
+end
