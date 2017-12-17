@@ -1,3 +1,5 @@
+nbits(U) = round(Int, log2(size(U,1)))
+
 @generated function bits(n, ::Type{Val{N}}) where N
   :($([:(Bool((n >> $(i-1)) & 0x01)) for i = N:-1:1]...),)
 end
@@ -32,6 +34,8 @@ X = classical(x -> !x[1], 1)
 CX = classical(x -> (x[1], x[1] ⊻ x[2]), 2)
 
 S = classical(reverse, 2)
+
+T = classical(x -> (x[1], x[2], (x[1] & x[2]) ⊻ x[3]), 3)
 
 H = [1  1
      1 -1]/√2

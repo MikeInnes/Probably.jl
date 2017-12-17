@@ -61,10 +61,3 @@ function measure!(s::State, is...)
   s.ψ .*= M'*[(j==i)*1/sqrt(ps[i]) for j = 1:length(ps)]
   bits(i-1, Val{length(is)})
 end
-
-# s = State(2)
-# apply!(H, s, 1)
-# apply!(CX, s, 1, 2)
-# measure!(s, 1)
-# measure!(s, 2)
-# s
