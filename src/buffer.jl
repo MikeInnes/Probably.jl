@@ -3,12 +3,21 @@ mutable struct Bits{N}
   state
 end
 
+const Bit = Bits{1}
+
 const states = WeakKeyDict()
 
 function Bits{N}() where N
   b = Bits{N}(0, State(N))
   states[b.state] = WeakKeyDict(b=>nothing)
   return b
+end
+
+nbits(::Bits{N}) where N = N
+
+function Base.show(io::IO, b::Bits)
+  println(io, "$(nbits(b)) bits with offset $(b.offset)")
+  show(io, b.state)
 end
 
 function combine(a::State, b::State)
@@ -36,3 +45,5 @@ function apply!(U, bs::Bits...)
   apply!(U, s, is...)
   return
 end
+
+measure!(b::Bits) = measure!(b.state, bitindices(b)...)
