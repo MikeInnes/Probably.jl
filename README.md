@@ -2,6 +2,41 @@
 
 [![Build Status](https://travis-ci.org/MikeInnes/Probably.jl.svg?branch=master)](https://travis-ci.org/MikeInnes/Probably.jl)
 
-[![Coverage Status](https://coveralls.io/repos/MikeInnes/Probably.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/MikeInnes/Probably.jl?branch=master)
+```julia
+Pkg.clone("https://github.com/MikeInnes/Probably.jl")
+```
 
-[![codecov.io](http://codecov.io/github/MikeInnes/Probably.jl/coverage.svg?branch=master)](http://codecov.io/github/MikeInnes/Probably.jl?branch=master)
+*Probably* is a little simulator for quantum information and computation. It's designed to be flexible enough to experiment with algorithms, protocols and programming models while also scaling to fairly large simulations.
+
+Create an EPR pair:
+
+```julia
+julia> using Probably
+
+julia> a, b = QBool(), QBool()
+(QBool(), QBool())
+
+julia> hadamard(a)
+
+julia> cnot(a, b)
+
+julia> measure.((a, b))
+(true, true) # or (false, false)
+```
+
+Lower-level interface: work directly with quantum states and arbitrary unitary transformations:
+
+```julia
+julia> using Probably: State, apply!, I, H, CX, ⊗
+
+julia> ψ = State(4)
+|0000⟩
+
+julia> apply!(I⊗H⊗I⊗I, ψ)
+|0100⟩ : 0.5
+|0000⟩ : 0.5
+
+julia> apply!(I⊗CX⊗I, ψ)
+|0110⟩ : 0.5
+|0000⟩ : 0.5
+```
