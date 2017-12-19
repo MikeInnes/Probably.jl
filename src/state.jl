@@ -20,9 +20,9 @@ labels(s::State) = map(n -> Base.bits(n-1)[end-nbits(s)+1:end], 1:length(s.ψ))
 probabilities(s::State) = abs2.(s.ψ)
 
 function Base.show(io::IO, s::State; n = 5)
-  basis = reverse(collect(Iterators.filter(x -> x[2] ≉ 0, zip(labels(s), probabilities(s)))))
-  length(basis) == 1 && return print(io, "|$(basis[1][1])⟩")
-  join(io, ["|$l⟩ : $p" for (l, p) in take(basis, n)], "\n")
+  basis = reverse(collect(Iterators.filter(x -> x[2] ≉ 0, zip(labels(s), s.ψ))))
+  length(basis) == 1 && basis[1][2] ≈ 1 && return print(io, "|$(basis[1][1])⟩")
+  join(io, ["|$l⟩ * ($p)" for (l, p) in take(basis, n)], " +\n")
   length(basis) > n && print(io, "\n    ⋮")
 end
 
@@ -58,6 +58,6 @@ function measure!(s::State, is...)
   M = measure(n, nbits(s)-length(is))*headfirst(nbits(s), is...)
   ps = M*probabilities(s)
   i = sample(ps)
-  s.ψ .*= M'*[(j==i)*1/sqrt(ps[i]) for j = 1:length(ps)]
+  s.ψ .*= M[i,:]./sqrt(ps[i])
   bits(i-1, Val{length(is)})
 end

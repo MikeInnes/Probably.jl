@@ -21,7 +21,7 @@ function Base.show(io::IO, b::Bits)
 end
 
 function combine(a::State, b::State)
-  a === b && return
+  a === b && return a
   of = nbits(a)
   a.ψ = a.ψ ⊗ b.ψ
   for buf in keys(states[b])
