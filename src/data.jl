@@ -22,3 +22,10 @@ function cnot(c::QBool, x::QBool)
 end
 
 measure(x::QBool) = measure!(x.bit)[1]
+
+function epr()
+  a, b = QBool(), QBool()
+  hadamard(a)
+  cnot(a, b)
+  return a, b
+end

@@ -8,14 +8,6 @@ import Probably: apply!
 rot(θ) = [cos(θ) -sin(θ)
           sin(θ) cos(θ)]
 
-# Construct an EPR pair – |11⟩ or |00⟩.
-function epr()
-  a, b = QBool(), QBool()
-  hadamard(a)
-  cnot(a, b)
-  return a, b
-end
-
 # Simulate measurement by a polaroid at angle θ to the x / |1⟩ axis.
 # (Effectively we rotate the photon rather than the polaroid.)
 function polaroid(x, θ)
