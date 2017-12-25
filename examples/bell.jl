@@ -5,7 +5,7 @@ import Probably: apply!
 
 ° = π/180
 
-rot(θ) = [cos(θ) -sin(θ);
+rot(θ) = [cos(θ) -sin(θ)
           sin(θ) cos(θ)]
 
 # Construct an EPR pair – |11⟩ or |00⟩.
@@ -16,8 +16,8 @@ function epr()
   return a, b
 end
 
-# Simulate measurement by a polaroid at angle θ to the x / |1⟩ axis, by
-# projecting the polaroid's basis into the standard basis and back
+# Simulate measurement by a polaroid at angle θ to the x / |1⟩ axis.
+# (Effectively we rotate the photon rather than the polaroid.)
 function polaroid(x, θ)
   apply!(rot(θ), x.bit)
   result = measure(x)
@@ -44,7 +44,7 @@ function experiment2()
 end
 
 # At different angles the qubits agree 50% of the time.
-mean(experiment() for i = 1:10^4)
+mean(experiment2() for _ = 1:10^4)
 
 # A local hidden variable theory *cannot* give this prediction. Say qubit `a` is
 # in a state that determines measurement outcomes at each angle [-60, 0, 60]
