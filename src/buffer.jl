@@ -27,6 +27,7 @@ function combine(a::State, b::State)
   for buf in keys(states[b])
     buf.state = a
     buf.offset += of
+    states[a][buf] = nothing
   end
   return a
 end

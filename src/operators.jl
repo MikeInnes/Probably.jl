@@ -27,19 +27,6 @@ pad(U, l, r) = foldr(⊗, [repeated(I, l)..., U, repeated(I, r)...])
 
 headfirst(n, is...) = permutation((is..., setdiff(1:n, is)...))
 
-I = classical(identity, 1)
-
-X = classical(x -> !x[1], 1)
-
-CX = classical(x -> (x[1], x[1] ⊻ x[2]), 2)
-
-S = classical(reverse, 2)
-
-T = classical(x -> (x[1], x[2], (x[1] & x[2]) ⊻ x[3]), 3)
-
-H = [1  1
-     1 -1]/√2
-
 function measure(n, m)
   M = zeros(Int, 2^n, 2^(n+m))
   for i = 0:2^n-1, j = 0:2^m-1
@@ -48,3 +35,23 @@ function measure(n, m)
   end
   return M
 end
+
+I = classical(identity, 1)
+
+CX = classical(x -> (x[1], x[1] ⊻ x[2]), 2)
+
+S = classical(reverse, 2)
+
+T = classical(x -> (x[1], x[2], (x[1] & x[2]) ⊻ x[3]), 3)
+
+X = [0 1
+     1 0]
+
+Y = [0 -im
+     im 0]
+
+Z = [1  0
+     0 -1]
+
+H = [1  1
+     1 -1]/√2
