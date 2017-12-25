@@ -6,18 +6,23 @@ QBool() = QBool(Bit())
 
 Base.show(io::IO, ::QBool) = print(io, "QBool()")
 
+function apply!(U, bs::QBool...)
+  apply!(U, map(x -> x.bit, bs)...)
+  return
+end
+
 function hadamard(x::QBool)
-  apply!(H, x.bit)
+  apply!(H, x)
   return x
 end
 
 function not(x::QBool)
-  apply!(X, x.bit)
+  apply!(X, x)
   return x
 end
 
 function cnot(c::QBool, x::QBool)
-  apply!(CX, c.bit, x.bit)
+  apply!(CX, c, x)
   return x
 end
 

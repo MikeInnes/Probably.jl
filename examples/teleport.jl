@@ -25,7 +25,7 @@ decode = Dict((false, false) => I,
               (true, false)  => Z,
               (true, true)   => Y)
 
-apply!(decode[state], eb.bit)
+apply!(decode[state], eb)
 
 # eb is now in an identical state to the original ψ. You can cheat and look at
 # its internal state to be sure.

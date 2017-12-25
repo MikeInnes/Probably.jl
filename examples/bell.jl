@@ -11,9 +11,9 @@ rot(θ) = [cos(θ) -sin(θ)
 # Simulate measurement by a polaroid at angle θ to the x / |1⟩ axis.
 # (Effectively we rotate the photon rather than the polaroid.)
 function polaroid(x, θ)
-  apply!(rot(θ), x.bit)
+  apply!(rot(θ), x)
   result = measure(x)
-  apply!(rot(-θ), x.bit)
+  apply!(rot(-θ), x)
   return result
 end
 
