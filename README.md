@@ -40,3 +40,5 @@ julia> apply!(I⊗CX⊗I, ψ)
 |0110⟩ * (0.7071067811865475 + 0.0im) +
 |0000⟩ * (0.7071067811865475 + 0.0im)
 ```
+
+See the [examples](/examples) for algorithms and communication protocols implemented with this package.
