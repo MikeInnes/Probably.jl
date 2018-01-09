@@ -13,7 +13,7 @@ int(n::Bool) = int((n,))
 function classical(f, ::Type{Val{N}}) where N
   U = zeros(Int, 2^N, 2^N)
   for i = 0:2^N-1
-    U[int(f(bits(i, Val{N})))+1, i+1] = 1
+    U[int(f(bits(i, Val{N})...))+1, i+1] = 1
   end
   return U
 end
@@ -38,11 +38,11 @@ end
 
 I = classical(identity, 1)
 
-CX = classical(x -> (x[1], x[1] ⊻ x[2]), 2)
+CX = classical((a, b) -> (a, a ⊻ b), 2)
 
-S = classical(reverse, 2)
+S = classical((a, b) -> (b, a), 2)
 
-T = classical(x -> (x[1], x[2], (x[1] & x[2]) ⊻ x[3]), 3)
+T = classical((a, b, c) -> (a, b, (a & b) ⊻ c), 3)
 
 X = [0 1
      1 0]
