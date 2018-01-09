@@ -4,13 +4,13 @@ end
 
 State(ψ::AbstractVector{<:Real}) = State(float(complex(ψ)))
 
-function State(n::Integer, vs::AbstractVector{<:Integer})
+function State(n::Integer, vs::NTuple{N,Integer}) where N
   ψ = zeros(Complex128, 2^n)
   foreach(v -> ψ[v+1] = 1/√length(vs), vs)
   return State(ψ)
 end
 
-State(n::Integer) = State(n, [0])
+State(n::Integer) = State(n, (0,))
 
 nbits(s::State) = nbits(s.ψ)
 Base.length(s::State) = nbits(s)

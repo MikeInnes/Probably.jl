@@ -1,17 +1,19 @@
 mutable struct Bits{N}
   offset::Int
-  state
+  state::State
 end
 
 const Bit = Bits{1}
 
 const states = WeakKeyDict()
 
-function Bits{N}() where N
-  b = Bits{N}(0, State(N))
+function Bits{N}(vs::Integer...) where N
+  b = Bits{N}(0, State(N, vs))
   states[b.state] = WeakKeyDict(b=>nothing)
   return b
 end
+
+Bits{N}() where N = Bits{N}(0)
 
 nbits(::Bits{N}) where N = N
 
