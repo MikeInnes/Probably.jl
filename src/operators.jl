@@ -21,7 +21,7 @@ end
 classical(f, N) = classical(f, Val{N})
 
 permutation(is::NTuple{N}) where N =
-  classical(x -> map(i -> x[i], is), Val{N})
+  classical((x...) -> map(i -> x[i], is), Val{N})
 
 pad(U, l, r) = foldr(⊗, [repeated(I, l)..., U, repeated(I, r)...])
 
