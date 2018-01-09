@@ -2,7 +2,10 @@ using Probably
 using Probably: apply!
 
 # Here's a function of a single bit.
-# We're interested in whether the function is constant.
+# We're interested in whether the function is constant. On a classical computer
+# we have to evaluate `f` twice to see `f(true)` and `f(false)`. On a quantum
+# computer can evaluate `f` just once.
+
 # Try uncommenting different definitions of `f` to see the result change.
 
 # Here are some variable functions:
@@ -16,7 +19,7 @@ f(x) = !x
 U = classical((x, y) -> (x, f(x) ⊻ y), 2)
 
 # Verify that the function behaves as expected:
-x = true
+x = true # or false
 a = QBool(x)
 b = QBool()
 apply!(U, a, b)
