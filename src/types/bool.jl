@@ -2,7 +2,7 @@ struct QBool
   bit::Bit
 end
 
-QBool(v::Integer = 0) = QBool(Bit(v))
+QBool(v::Bool = false) = QBool(Bit(v))
 
 Base.show(io::IO, ::QBool) = print(io, "QBool()")
 

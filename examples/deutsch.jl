@@ -26,8 +26,8 @@ apply!(U, a, b)
 measure(b) == f(x)
 
 # Now we apply `f` with the inputs in superposition.
-a = hadamard(QBool(0)) # a = |+⟩
-b = hadamard(QBool(1)) # b = |-⟩
+a = hadamard(QBool(false)) # a = |+⟩
+b = hadamard(QBool(true))  # b = |-⟩
 apply!(U, a, b)
 hadamard(a)
 
