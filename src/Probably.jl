@@ -8,7 +8,8 @@ a ⊗ b = kron(a, b)
 
 include("operators.jl")
 include("state.jl")
-include("buffer.jl")
-include("data.jl")
+include("bits.jl")
+
+include("types/bool.jl")
 
 end # module
