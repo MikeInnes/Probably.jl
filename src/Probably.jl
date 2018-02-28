@@ -2,7 +2,9 @@ module Probably
 
 using Base.Iterators: filter, take, repeated
 
-export State, QBool, QBuffer, epr, measure, hadamard, not, cnot, classical
+export State, QBool, QBuffer, epr,
+  measure, hadamard, not, cnot, swap,
+  classical, control
 
 a ⊗ b = kron(a, b)
 

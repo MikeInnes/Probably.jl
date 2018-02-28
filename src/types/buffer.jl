@@ -15,3 +15,9 @@ function Base.getindex(buf::QBuffer, i::Integer)
   @assert 1 ≤ i ≤ length(buf)
   QBool(Bit(buf.bits.offset+i-1, buf.bits.state))
 end
+
+function Base.getindex(buf::QBuffer, i::UnitRange)
+  @assert 1 ≤ i.start ≤ length(buf)
+  @assert 1 ≤ i.stop  ≤ length(buf)
+  QBuffer(Bits{length(i)}(buf.bits.offset+i.start-1, buf.bits.state))
+end
