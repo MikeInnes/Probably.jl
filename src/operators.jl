@@ -36,13 +36,11 @@ function measure(n, m)
   return M
 end
 
-I = classical(identity, 1)
+zero = [1, 0]
+one = [0, 1]
 
-CX = classical((a, b) -> (a, a ⊻ b), 2)
-
-S = classical((a, b) -> (b, a), 2)
-
-T = classical((a, b, c) -> (a, b, (a & b) ⊻ c), 3)
+I = [1 0
+     0 1]
 
 X = [0 1
      1 0]
@@ -55,3 +53,11 @@ Z = [1  0
 
 H = [1  1
      1 -1]/√2
+
+S = classical((a, b) -> (b, a), 2)
+
+control(U) = zero*zero' ⊗ eye(U) + one*one' ⊗ U
+
+CX = control(X)
+
+T = control(CX)
