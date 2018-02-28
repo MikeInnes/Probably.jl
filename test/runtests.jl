@@ -19,4 +19,10 @@ a = QBool(true)
 @test probabilities(a.bit.state, 1) ≈ [0,1]
 @test measure(a) == true
 
+a = QBool(true)
+b = QBool(false)
+@test measure.((a,b)) == (true,false)
+swap(a, b)
+@test measure.((a,b)) == (false,true)
+
 end

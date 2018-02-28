@@ -26,6 +26,11 @@ function cnot(c::QBool, x::QBool)
   return x
 end
 
+function swap(a::QBool, b::QBool)
+  apply!(S, a, b)
+  return
+end
+
 measure(x::QBool) = measure!(x.bit)[1]
 
 function epr()
