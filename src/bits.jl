@@ -15,6 +15,8 @@ end
 
 Bits{N}() where N = Bits{N}(0)
 
+bits(b::Bits) = b
+
 nbits(::Bits{N}) where N = N
 
 function Base.show(io::IO, b::Bits)
@@ -49,4 +51,8 @@ function apply!(U, bs::Bits...)
   return
 end
 
-measure!(b::Bits) = measure!(b.state, bitindices(b)...)
+apply!(U, bs...) = apply!(U, bits.(bs)...)
+
+measure(b::Bits) = measure!(b.state, bitindices(b)...)
+
+measure(x) = repr(typeof(x),measure(bits(x)))

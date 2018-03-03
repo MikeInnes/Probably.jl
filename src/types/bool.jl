@@ -4,12 +4,10 @@ end
 
 QBool(v::Bool = false) = QBool(Bit(v))
 
-Base.show(io::IO, ::QBool) = print(io, "QBool()")
+bits(x::QBool) = x.bit
+repr(::Type{QBool}, bits) = bits[1]
 
-function apply!(U, bs::QBool...)
-  apply!(U, map(x -> x.bit, bs)...)
-  return
-end
+Base.show(io::IO, ::QBool) = print(io, "QBool()")
 
 function hadamard(x::QBool)
   apply!(H, x)
@@ -30,8 +28,6 @@ function swap(a::QBool, b::QBool)
   apply!(S, a, b)
   return
 end
-
-measure(x::QBool) = measure!(x.bit)[1]
 
 function epr()
   a, b = QBool(), QBool()
