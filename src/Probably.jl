@@ -2,7 +2,7 @@ module Probably
 
 using Base.Iterators: filter, take, repeated
 
-export State, QBool, QBuffer, epr,
+export State, QBool, QUInt, QBuffer, epr,
   measure, hadamard, not, cnot, swap,
   classical, control
 
@@ -15,5 +15,6 @@ include("bits.jl")
 
 include("types/buffer.jl")
 include("types/bool.jl")
+include("types/int.jl")
 
 end # module
