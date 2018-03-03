@@ -35,29 +35,3 @@ function measure(n, m)
   end
   return M
 end
-
-zero = [1, 0]
-one = [0, 1]
-
-I = [1 0
-     0 1]
-
-X = [0 1
-     1 0]
-
-Y = [0 -im
-     im 0]
-
-Z = [1  0
-     0 -1]
-
-H = [1  1
-     1 -1]/√2
-
-S = classical((a, b) -> (b, a), 2)
-
-control(U) = zero*zero' ⊗ eye(U) + one*one' ⊗ U
-
-CX = control(X)
-
-T = control(CX)

@@ -9,6 +9,7 @@ export State, QBool, QBuffer, epr,
 a ⊗ b = kron(a, b)
 
 include("operators.jl")
+include("constants.jl")
 include("state.jl")
 include("bits.jl")
 
