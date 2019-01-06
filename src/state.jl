@@ -5,7 +5,7 @@ end
 State(ψ::AbstractVector{<:Real}) = State(float(complex(ψ)))
 
 function State(n::Integer, vs::NTuple{N,Integer}) where N
-  ψ = zeros(Complex128, 2^n)
+  ψ = zeros(ComplexF64, 2^n)
   foreach(v -> ψ[v+1] = 1/√length(vs), vs)
   return State(ψ)
 end
@@ -15,14 +15,14 @@ State(n::Integer) = State(n, (0,))
 nbits(s::State) = nbits(s.ψ)
 Base.length(s::State) = nbits(s)
 
-labels(s::State) = map(n -> Base.bits(n-1)[end-nbits(s)+1:end], 1:length(s.ψ))
+labels(s::State) = map(n -> Base.bitstring(n-1)[end-nbits(s)+1:end], 1:length(s.ψ))
 
 probabilities(s::State) = abs2.(s.ψ)
 
 function Base.show(io::IO, s::State; n = 5)
   basis = reverse(collect(Iterators.filter(x -> x[2] ≉ 0, zip(labels(s), s.ψ))))
   length(basis) == 1 && basis[1][2] ≈ 1 && return print(io, "|$(basis[1][1])⟩")
-  join(io, ["|$l⟩ * ($p)" for (l, p) in take(basis, n)], " +\n")
+  join(io, ["|$(l)⟩ * ($p)" for (l, p) in take(basis, n)], " +\n")
   length(basis) > n && print(io, "\n    ⋮")
 end
 

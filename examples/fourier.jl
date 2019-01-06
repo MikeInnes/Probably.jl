@@ -2,7 +2,7 @@ using Probably
 using Probably: Bits, apply!, H, ⊗
 
 # (N = 2^n)th root of unity
-ω(n) = e^(-2π*im/(2^n))
+ω(n) = MathConstants.e^(-2π*im/(2^n))
 
 # The Fourier transform is represented by the matrix W.
 # We could use W directly, but it's more interesting

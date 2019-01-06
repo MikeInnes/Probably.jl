@@ -1,5 +1,5 @@
 # Quantum Key Distribution (BB84)
-# You can run this from a terminal as `julia --color=yes qkd.jl`
+# You can run this from a terminal as `julia --color=yes bb84.jl`
 # Try enabling Eve (line 28) to see the key distribution fail.
 
 using Probably
@@ -13,7 +13,7 @@ eve_bits = []
 eve(x) = push!(eve_bits, measure(x))
 
 # Alice
-@schedule begin
+@async begin
   bits = []
   bases = []
   for i = 1:N
@@ -60,10 +60,10 @@ let
   # Check a subset of the bits
   subset, alice_bits = take!(a2b)
   if bits[subset] != alice_bits
-    warn("QKD failed, eavesdropping detected")
+    @warn("QKD failed, eavesdropping detected")
   else
     bits = bits[.!subset]
-    info("QKD success. Key is:")
+    @info("QKD success. Key is:")
     println(Int.(bits))
   end
 end
