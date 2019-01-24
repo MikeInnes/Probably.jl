@@ -1,6 +1,7 @@
 # Bell inequality
 
 using Probably
+using Statistics: mean
 import Probably: apply!
 
 ° = π/180

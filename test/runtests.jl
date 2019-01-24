@@ -1,5 +1,5 @@
 using Probably
-using Base.Test
+using Test
 using Probably: probabilities
 
 @testset "Probably" begin

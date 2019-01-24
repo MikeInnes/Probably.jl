@@ -5,7 +5,7 @@ nbits(U) = round(Int, log2(size(U,1)))
 end
 
 @generated function int(bits::NTuple{N}) where N
-  reduce((x, b) -> :(($x<<1)+$b), 0, [:(bits[$i]) for i = 1:N])
+  reduce((x, b) -> :(($x<<1)+$b), [:(bits[$i]) for i = 1:N]; init = 0)
 end
 
 int(n::Bool) = int((n,))

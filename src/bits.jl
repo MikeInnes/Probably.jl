@@ -39,7 +39,7 @@ end
 combine(b::Bits) = b.state
 combine(bs::Bits...) = reduce(combine, map(x -> x.state, bs))
 
-bitindices(b::Bits{N}) where N = ntuple(i -> b.offset+i, Val{N})
+bitindices(b::Bits{N}) where N = ntuple(i -> b.offset+i, Val(N))
 
 tcat(x::Tuple) = x
 tcat(x::Tuple, y::Tuple, ys::Tuple...) = tcat((x..., y...), ys...)
